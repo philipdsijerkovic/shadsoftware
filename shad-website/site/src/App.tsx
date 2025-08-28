@@ -19,12 +19,23 @@ function App() {
     <>
       <div className="w-full relative z-50">
         <div className="mx-auto flex items-center max-w-7xl px-4 relative">
+          {/* Logo - Hidden on small devices */}
+          <div className="absolute left-0 flex items-center hidden lg:flex">
+            <img
+              src="/shad.png"
+              alt="Shad Software Logo"
+              className="h-30 w-auto"
+            />
+          </div>
+
           {/* Centered Navigation */}
           <div className="flex-1 flex justify-center">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="text-lg font-medium">
+                    Services
+                  </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
@@ -33,10 +44,10 @@ function App() {
                             className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                             href="/"
                           >
-                            <div className="mb-2 mt-4 text-lg font-medium">
+                            <div className="mb-2 mt-4 text-xl font-medium">
                               Our Products
                             </div>
-                            <p className="text-sm leading-tight text-muted-foreground">
+                            <p className="text-base leading-tight text-muted-foreground">
                               Discover our range of innovative solutions
                               designed to meet your needs.
                             </p>
@@ -60,7 +71,10 @@ function App() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    className={navigationMenuTriggerStyle()}
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "text-lg font-medium"
+                    )}
                     href="/tickets"
                   >
                     Tickets
@@ -68,7 +82,10 @@ function App() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    className={navigationMenuTriggerStyle()}
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "text-lg font-medium"
+                    )}
                     href="/about"
                   >
                     About
@@ -76,7 +93,10 @@ function App() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    className={navigationMenuTriggerStyle()}
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "text-lg font-medium"
+                    )}
                     href="/pricing"
                   >
                     Pricing
@@ -86,12 +106,12 @@ function App() {
             </NavigationMenu>
           </div>
 
-          {/* Auth Buttons - Positioned absolutely to the right */}
-          <div className="absolute right-4 flex items-center gap-4">
+          {/* Auth Buttons - Hidden on small devices */}
+          <div className="absolute right-0 flex items-center gap-4 hidden lg:flex">
             <button
               className={cn(
                 navigationMenuTriggerStyle(),
-                "bg-transparent hover:bg-accent"
+                "bg-transparent hover:bg-accent text-lg font-medium"
               )}
             >
               Log In
@@ -99,7 +119,7 @@ function App() {
             <button
               className={cn(
                 navigationMenuTriggerStyle(),
-                "bg-blue-400 text-primary-foreground hover:bg-primary/90"
+                "bg-blue-400 text-primary-foreground hover:bg-primary/90 text-lg font-medium"
               )}
             >
               Register
@@ -108,7 +128,8 @@ function App() {
         </div>
       </div>
 
-      <div className="mt-16">
+      {/* Wrap your content in a relative container with higher z-index */}
+      <div className="relative z-10 mt-16">
         <Hero />
       </div>
     </>
@@ -130,7 +151,7 @@ const ListItem = forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="text-base font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>

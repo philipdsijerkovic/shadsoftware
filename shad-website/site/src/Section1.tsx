@@ -3,51 +3,105 @@ import React from "react";
 const Section1: React.FC = () => {
   const services = [
     {
-      title: "Web Development",
+      title: "Website Design",
       description:
-        "Modern, scalable web applications built with cutting-edge technology.",
+        "Modern custom designs made for your brand. All designs are responsive and made with the latest technologies for optimal performance.",
+      badges: ["Responsive", "Modern", "Fast"],
+      image: "/web.svg", // You'll need to add appropriate images
     },
     {
       title: "Mobile Apps",
       description:
-        "Intelligent mobile solutions designed for seamless user experiences.",
+        "Intelligent mobile solutions designed for seamless user experiences across iOS and Android platforms.",
+      badges: ["iOS", "Android", "Cross-platform"],
+      image: "/phone.svg",
     },
     {
-      title: "Software Solutions",
+      title: "Maintenance",
       description:
-        "Custom AI-powered software to automate and optimize your workflows.",
+        "Website maintenance and support services to keep your site modern, secure, and running smoothly.",
+      badges: ["Updates", "Custom", "Support"],
+      image: "/gear.svg",
+    },
+    {
+      title: "Miscellaneous",
+      description:
+        "Have another technical issue that needs fixing? Contact us, we're here to help!",
+      badges: ["Repair", "Troubleshooting", "Support"],
+      image: "/hammer.svg",
     },
   ];
 
   return (
-    <section className="py-32 px-6 bg-transparent">
-      <div className="max-w-4xl mx-auto">
+    <section
+      className="relative py-24 sm:py-32 w-screen ml-[calc(-50vw+50%-0.5rem)] overflow-hidden"
+      style={{ backgroundColor: "#d3dfe9" }}
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Title */}
-        <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-6xl font-light text-black mb-6 tracking-tight">
-            Services
-          </h2>
-          <div className="w-16 h-px bg-gray-400 mx-auto"></div>
+        <div className="mx-auto max-w-2xl lg:text-center mb-16 sm:mb-20">
+          <p className="mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
+            Everything you need to{" "}
+            <span
+              style={{
+                background: "linear-gradient(to right, #6b7280, #60a5fa)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              grow your business
+            </span>
+          </p>
+          <p className="mt-6 text-lg/8 text-gray-700">
+            We offer a comprehensive suite of services to help your business succeed.
+          </p>
         </div>
 
-        {/* Vertical Cards */}
-        <div className="space-y-8">
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {services.map((service, index) => (
             <div
               key={index}
-              className="group bg-white/60 backdrop-blur-sm border border-gray-200/50 hover:border-gray-300/60 transition-all duration-500 p-10 rounded-sm hover:bg-white/80"
+              className="group bg-white/70 backdrop-blur-sm border border-white/50 rounded-2xl p-8 hover:bg-white/90 transition-all duration-300 hover:shadow-xl hover:shadow-black/10"
             >
-              {/* Content */}
-              <div>
-                <h3 className="text-2xl font-light text-black mb-3 tracking-wide">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 text-lg leading-relaxed mb-6 font-light">
-                  {service.description}
-                </p>
-                <button className="text-black text-sm font-medium tracking-wider uppercase hover:text-gray-600 transition-colors duration-300">
-                  Explore →
-                </button>
+              <div className="flex gap-6 h-full">
+                {/* Content */}
+                <div className="flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-2xl font-semibold text-gray-900 mb-4 tracking-tight">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 text-base leading-relaxed mb-6">
+                      {service.description}
+                    </p>
+                  </div>
+
+                  {/* Badges */}
+                  <div className="flex flex-wrap gap-2">
+                    {service.badges.map((badge, badgeIndex) => (
+                      <span
+                        key={badgeIndex}
+                        className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full"
+                      >
+                        {badge}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Image */}
+                <div className="w-32 h-32 lg:w-40 lg:h-40 flex-shrink-0 rounded-xl to-gray-300 flex items-center justify-center">
+                  {/* Placeholder - replace with actual images */}
+                  <div className="w-16 h-16 bg-transparent rounded-lg"></div>
+                  {
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover rounded-xl"
+                    />
+                  }
+                </div>
               </div>
             </div>
           ))}
