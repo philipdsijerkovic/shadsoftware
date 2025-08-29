@@ -1,7 +1,46 @@
 import { cn } from "@/lib/utils";
 import { TypeAnimation } from "react-type-animation";
+import { motion } from "framer-motion";
 
 export default function Hero() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const slideInFromLeft = {
+    hidden: { x: -100, opacity: 0, filter: "blur(10px)" },
+    visible: {
+      x: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const slideInFromLeftDelayed = {
+    hidden: { x: -80, opacity: 0, filter: "blur(8px)" },
+    visible: {
+      x: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+        delay: 0.3,
+      },
+    },
+  };
+
   return (
     <section className="relative h-screen w-screen ml-[calc(-50vw+50%)] overflow-hidden">
       {/* Background gradient for this section only */}
@@ -15,8 +54,16 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 flex items-center justify-center h-screen px-4 -mt-24">
-        <div className="text-center max-w-5xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-8xl font-bold text-black leading-tight">
+        <motion.div
+          className="text-center max-w-5xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.h1
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-8xl font-bold text-black leading-tight"
+            variants={slideInFromLeft}
+          >
             Build. Launch. Grow.
             <br />
             <span className="whitespace-nowrap">Your </span>
@@ -48,14 +95,21 @@ export default function Hero() {
               repeat={Infinity}
               cursor={true}
             />
-          </h1>
-          <p className="mt-6 text-lg sm:text-xl md:text-xl text-gray-600 font-medium">
+          </motion.h1>
+
+          <motion.p
+            className="mt-6 text-lg sm:text-xl md:text-xl text-gray-600 font-medium"
+            variants={slideInFromLeft}
+          >
             Request a quote or go to our interactive quote tool for more
             information.
-          </p>
+          </motion.p>
 
           {/* Email input with buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center max-w-xl mx-auto">
+          <motion.div
+            className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center max-w-xl mx-auto"
+            variants={slideInFromLeftDelayed}
+          >
             <div className="relative w-full sm:w-[350px] sm:flex-shrink-0">
               <input
                 type="email"
@@ -69,8 +123,8 @@ export default function Hero() {
             <button className="px-6 py-3 bg-gray-300/30 border border-gray-300/50 text-gray-700 rounded-full hover:bg-gray-100/50 transition-colors whitespace-nowrap font-semibold">
               Interactive Quote Tool
             </button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

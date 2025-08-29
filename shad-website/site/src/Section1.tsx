@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const Section1: React.FC = () => {
   const services = [
@@ -7,7 +8,7 @@ const Section1: React.FC = () => {
       description:
         "Modern custom designs made for your brand. All designs are responsive and made with the latest technologies for optimal performance.",
       badges: ["Responsive", "Modern", "Fast"],
-      image: "/web.svg", // You'll need to add appropriate images
+      image: "/web.svg",
     },
     {
       title: "Mobile Apps",
@@ -32,6 +33,43 @@ const Section1: React.FC = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const slideInFromLeft = {
+    hidden: { x: -100, opacity: 0, filter: "blur(10px)" },
+    visible: {
+      x: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { x: -80, opacity: 0, filter: "blur(8px)" },
+    visible: {
+      x: 0,
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <section
       className="relative py-24 sm:py-32 w-screen ml-[calc(-50vw+50%-0.5rem)] overflow-hidden"
@@ -39,8 +77,17 @@ const Section1: React.FC = () => {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Title */}
-        <div className="mx-auto max-w-2xl lg:text-center mb-16 sm:mb-20">
-          <p className="mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
+        <motion.div
+          className="mx-auto max-w-2xl lg:text-center mb-16 sm:mb-20"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.p
+            className="mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance"
+            variants={slideInFromLeft}
+          >
             Everything you need to{" "}
             <span
               style={{
@@ -52,18 +99,29 @@ const Section1: React.FC = () => {
             >
               grow your business
             </span>
-          </p>
-          <p className="mt-6 text-lg/8 text-gray-700">
-            We offer a comprehensive suite of services to help your business succeed.
-          </p>
-        </div>
+          </motion.p>
+          <motion.p
+            className="mt-6 text-lg/8 text-gray-700"
+            variants={slideInFromLeft}
+          >
+            We offer a comprehensive suite of services to help your business
+            succeed.
+          </motion.p>
+        </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {services.map((service, index) => (
-            <div
+            <motion.div
               key={index}
               className="group bg-white/70 backdrop-blur-sm border border-white/50 rounded-2xl p-8 hover:bg-white/90 transition-all duration-300 hover:shadow-xl hover:shadow-black/10"
+              variants={cardVariants}
             >
               <div className="flex gap-6 h-full">
                 {/* Content */}
@@ -92,20 +150,16 @@ const Section1: React.FC = () => {
 
                 {/* Image */}
                 <div className="w-32 h-32 lg:w-40 lg:h-40 flex-shrink-0 rounded-xl to-gray-300 flex items-center justify-center">
-                  {/* Placeholder - replace with actual images */}
-                  <div className="w-16 h-16 bg-transparent rounded-lg"></div>
-                  {
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover rounded-xl"
-                    />
-                  }
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
