@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 
 const Section1: React.FC = () => {
   const services = [
@@ -33,43 +32,6 @@ const Section1: React.FC = () => {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const slideInFromLeft = {
-    hidden: { x: -100, opacity: 0, filter: "blur(10px)" },
-    visible: {
-      x: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { x: -80, opacity: 0, filter: "blur(8px)" },
-    visible: {
-      x: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
     <section
       className="relative py-24 sm:py-32 w-screen ml-[calc(-50vw+50%-0.5rem)] overflow-hidden"
@@ -77,17 +39,8 @@ const Section1: React.FC = () => {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Title */}
-        <motion.div
-          className="mx-auto max-w-2xl lg:text-center mb-16 sm:mb-20"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.p
-            className="mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance"
-            variants={slideInFromLeft}
-          >
+        <div className="mx-auto max-w-2xl lg:text-center mb-16 sm:mb-20">
+          <p className="mt-2 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
             Everything you need to{" "}
             <span
               style={{
@@ -99,29 +52,19 @@ const Section1: React.FC = () => {
             >
               grow your business
             </span>
-          </motion.p>
-          <motion.p
-            className="mt-6 text-lg/8 text-gray-700"
-            variants={slideInFromLeft}
-          >
+          </p>
+          <p className="mt-6 text-lg/8 text-gray-700">
             We offer a comprehensive suite of services to help your business
             succeed.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Services Grid */}
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {services.map((service, index) => (
-            <motion.div
+            <div
               key={index}
               className="group bg-white/70 backdrop-blur-sm border border-white/50 rounded-2xl p-8 hover:bg-white/90 transition-all duration-300 hover:shadow-xl hover:shadow-black/10"
-              variants={cardVariants}
             >
               <div className="flex gap-6 h-full">
                 {/* Content */}
@@ -157,9 +100,9 @@ const Section1: React.FC = () => {
                   />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

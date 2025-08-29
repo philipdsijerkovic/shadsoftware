@@ -107,20 +107,20 @@ export default function Hero() {
 
           {/* Email input with buttons */}
           <motion.div
-            className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center max-w-xl mx-auto"
+            className="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center max-w-2xl mx-auto"
             variants={slideInFromLeftDelayed}
           >
-            <div className="relative w-full sm:w-[350px] sm:flex-shrink-0">
+            <div className="relative w-full sm:w-[450px] sm:flex-shrink-0">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full px-6 py-3 pr-20 rounded-full bg-gray-300/30 border border-gray-300/50 text-gray-800 placeholder-gray-500 focus:ring-0 focus:border-transparent"
+                className="w-full px-8 py-4 pr-24 rounded-full bg-gray-300/30 border border-gray-300/50 text-gray-800 placeholder-gray-500 focus:ring-0 focus:border-transparent text-lg"
               />
-              <button className="absolute right-1 top-1 bottom-1 px-4 bg-blue-400 text-white rounded-full hover:bg-blue-500 transition-colors font-semibold">
+              <button className="absolute right-2 top-2 bottom-2 px-5 bg-blue-400 text-white rounded-full hover:bg-blue-500 transition-colors font-semibold">
                 Submit
               </button>
             </div>
-            <button className="px-6 py-3 bg-gray-300/30 border border-gray-300/50 text-gray-700 rounded-full hover:bg-gray-100/50 transition-colors whitespace-nowrap font-semibold">
+            <button className="px-8 py-4 bg-gray-300/30 border border-gray-300/50 text-gray-700 rounded-full hover:bg-gray-100/50 transition-colors whitespace-nowrap font-semibold text-lg">
               Interactive Quote Tool
             </button>
           </motion.div>

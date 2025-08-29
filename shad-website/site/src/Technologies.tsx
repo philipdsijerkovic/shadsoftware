@@ -133,7 +133,7 @@ const Technologies: React.FC = () => {
               className="flex items-center justify-center"
               variants={techVariants}
             >
-              <div className="w-16 h-16 lg:w-20 lg:h-20 opacity-70 hover:opacity-100 transition-opacity duration-300">
+              <div className="w-16 h-16 lg:w-20 lg:h-20">
                 {typeof tech.image === "string" ? (
                   <img
                     src={tech.image}

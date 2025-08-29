@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 
 const Section2: React.FC = () => {
   const steps = [
@@ -47,58 +46,12 @@ const Section2: React.FC = () => {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const slideInFromLeft = {
-    hidden: { x: -100, opacity: 0, filter: "blur(10px)" },
-    visible: {
-      x: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { x: -80, opacity: 0, filter: "blur(8px)" },
-    visible: {
-      x: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
     <section className="py-32 sm:py-40 px-6 bg-transparent">
       <div className="max-w-6xl mx-auto">
         {/* Title */}
-        <motion.div
-          className="text-center mb-16 sm:mb-20"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.p
-            className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance"
-            variants={slideInFromLeft}
-          >
+        <div className="text-center mb-16 sm:mb-20">
+          <p className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl lg:text-balance">
             Your ideas, our{" "}
             <span
               style={{
@@ -110,41 +63,31 @@ const Section2: React.FC = () => {
             >
               process
             </span>
-          </motion.p>
-          <motion.p
-            className="mt-6 text-lg/8 text-gray-700 max-w-3xl mx-auto"
-            variants={slideInFromLeft}
-          >
+          </p>
+          <p className="mt-6 text-lg/8 text-gray-700 max-w-3xl mx-auto">
             From concept to launch, we collaborate with you to create digital
             experiences that captivate your audience and drive results
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Process Steps */}
-        <motion.div
-          className="space-y-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
+        <div className="space-y-6">
           {steps.map((step, index) => (
-            <motion.div
+            <div
               key={index}
-              variants={cardVariants}
-              className="group relative bg-white/70 backdrop-blur-sm border border-white/50 rounded-3xl p-8 lg:p-12 hover:bg-white/90 hover:border-white/70 transition-all duration-500 hover:shadow-xl hover:shadow-black/10"
+              className="relative bg-white/70 backdrop-blur-sm border border-white/50 rounded-3xl p-8 lg:p-12"
             >
               <div className="flex flex-col lg:flex-row lg:items-center gap-8">
                 {/* Left Side - Number */}
                 <div className="flex items-center gap-6 lg:min-w-[100px]">
-                  <span className="text-6xl lg:text-7xl font-extralight text-gray-200 group-hover:text-gray-300 transition-colors duration-500">
+                  <span className="text-6xl lg:text-7xl font-extralight text-gray-200">
                     {step.number}
                   </span>
                 </div>
 
                 {/* Middle - Content */}
                 <div className="flex-1 space-y-4">
-                  <h3 className="text-2xl lg:text-3xl font-semibold text-gray-900 tracking-tight group-hover:text-gray-800 transition-colors duration-300">
+                  <h3 className="text-2xl lg:text-3xl font-semibold text-gray-900 tracking-tight">
                     {step.title}
                   </h3>
                   <p className="text-gray-600 text-lg leading-relaxed max-w-2xl">
@@ -164,12 +107,9 @@ const Section2: React.FC = () => {
                   </div>
                 )}
               </div>
-
-              {/* Subtle gradient overlay */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
