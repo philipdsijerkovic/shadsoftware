@@ -117,34 +117,7 @@ const Tickets: React.FC = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <div className="group bg-white/80 backdrop-blur-md border border-white/60 rounded-3xl p-8 hover:bg-white/90 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-1">
-              <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
-                <svg
-                  className="w-6 h-6 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Live Chat
-              </h3>
-              <p className="text-gray-600 text-sm mb-4">
-                Get instant help from our support team
-              </p>
-              <button className="text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
-                Start Chat &rarr;
-              </button>
-            </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="group bg-white/80 backdrop-blur-md border border-white/60 rounded-3xl p-8 hover:bg-white/90 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-1">
               <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
                 <svg
@@ -201,7 +174,7 @@ const Tickets: React.FC = () => {
           </div>
 
           {/* Main Form */}
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="bg-white/90 backdrop-blur-xl border border-white/70 rounded-3xl p-10 shadow-2xl shadow-black/10">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">
