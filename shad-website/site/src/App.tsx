@@ -8,131 +8,158 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { forwardRef, useState } from "react";
-import Hero from "./Hero";
+import { forwardRef } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import Home from "./pages/Home";
+import Quote from "./pages/Quote";
+import Pricing from "./pages/Pricing";
+import Tickets from "./pages/Tickets";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
+function Navigation() {
+  const location = useLocation();
 
   return (
-    <>
-      <div className="w-full relative z-50">
-        <div className="mx-auto flex items-center max-w-7xl px-4 relative">
-          {/* Logo - Hidden on small devices */}
-          <div className="absolute left-0 flex items-center hidden lg:flex">
+    <div className="w-full relative z-50">
+      <div className="mx-auto flex items-center max-w-7xl px-4 relative">
+        {/* Logo - Hidden on small devices */}
+        <div className="absolute left-0 flex items-center hidden lg:flex">
+          <Link to="/">
             <img
               src="/shad.png"
               alt="Shad Software Logo"
               className="h-30 w-auto"
             />
-          </div>
+          </Link>
+        </div>
 
-          {/* Centered Navigation */}
-          <div className="flex-1 flex justify-center">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-lg font-medium">
-                    Services
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                            href="/"
-                          >
-                            <div className="mb-2 mt-4 text-xl font-medium">
-                              Our Products
-                            </div>
-                            <p className="text-base leading-tight text-muted-foreground">
-                              Discover our range of innovative solutions
-                              designed to meet your needs.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <ListItem
-                        href="/products/software"
-                        title="Software Solutions"
-                      >
-                        Custom software development and enterprise applications.
-                      </ListItem>
-                      <ListItem href="/products/web" title="Web Development">
-                        Modern web applications and responsive websites.
-                      </ListItem>
-                      <ListItem href="/products/mobile" title="Mobile Apps">
-                        Native and cross-platform mobile applications.
-                      </ListItem>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
+        {/* Centered Navigation */}
+        <div className="flex-1 flex justify-center">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="text-lg font-medium">
+                  Services
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          to="/"
+                        >
+                          <div className="mb-2 mt-4 text-xl font-medium">
+                            Our Products
+                          </div>
+                          <p className="text-base leading-tight text-muted-foreground">
+                            Discover our range of innovative solutions designed
+                            to meet your needs.
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <ListItem href="/" title="Website Design">
+                      Modern custom designs made for your brand.
+                    </ListItem>
+                    <ListItem href="/" title="Mobile Apps">
+                      Intelligent mobile solutions for iOS and Android.
+                    </ListItem>
+                    <ListItem href="/" title="Maintenance">
+                      Website maintenance and support services.
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "text-lg font-medium"
+                      "text-lg font-medium",
+                      location.pathname === "/pricing" ? "bg-accent" : ""
                     )}
-                    href="/tickets"
-                  >
-                    Tickets
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-lg font-medium"
-                    )}
-                    href="/about"
-                  >
-                    About
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    className={cn(
-                      navigationMenuTriggerStyle(),
-                      "text-lg font-medium"
-                    )}
-                    href="/pricing"
+                    to="/pricing"
                   >
                     Pricing
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "text-lg font-medium",
+                      location.pathname === "/quote" ? "bg-accent" : ""
+                    )}
+                    to="/quote"
+                  >
+                    Get Quote
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "text-lg font-medium",
+                      location.pathname === "/tickets" ? "bg-accent" : ""
+                    )}
+                    to="/tickets"
+                  >
+                    Support
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
 
-          {/* Auth Buttons - Hidden on small devices */}
-          <div className="absolute right-0 flex items-center gap-4 hidden lg:flex">
-            <button
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "bg-transparent hover:bg-accent text-lg font-medium"
-              )}
-            >
-              Log In
-            </button>
-            <button
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "bg-blue-400 text-primary-foreground hover:bg-primary/90 text-lg font-medium"
-              )}
-            >
-              Register
-            </button>
-          </div>
+        {/* Auth Buttons - Hidden on small devices */}
+        <div className="absolute right-0 flex items-center gap-4 hidden lg:flex">
+          <button
+            className={cn(
+              navigationMenuTriggerStyle(),
+              "bg-transparent hover:bg-accent text-lg font-medium"
+            )}
+          >
+            Log In
+          </button>
+          <button
+            className={cn(
+              navigationMenuTriggerStyle(),
+              "bg-blue-400 text-primary-foreground hover:bg-primary/90 text-lg font-medium"
+            )}
+          >
+            Register
+          </button>
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Wrap your content in a relative container with higher z-index */}
+function App() {
+  return (
+    <Router>
+      <Navigation />
       <div className="relative z-10 mt-16">
-        <Hero />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/quote" element={<Quote />} />
+          <Route path="/tickets" element={<Tickets />} />
+        </Routes>
       </div>
-    </>
+    </Router>
   );
 }
 
