@@ -51,7 +51,7 @@ const Section3: React.FC = () => {
       opacity: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 0.8,
+        duration: 0.4,
         ease: "easeOut",
       },
     },
@@ -64,7 +64,7 @@ const Section3: React.FC = () => {
       opacity: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 0.8,
+        duration: 0.4,
         ease: "easeOut",
       },
     },

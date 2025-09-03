@@ -81,10 +81,19 @@ const Technologies: React.FC = () => {
 
   return (
     <section
-      className="relative py-28 sm:py-36 px-6"
-      style={{ backgroundColor: "#f3f7fb" }}
+      className="w-full min-h-screen py-28 sm:py-36 px-6"
+      style={{
+        backgroundColor: "#f3f7fb",
+        position: "relative",
+        margin: 0,
+        padding: "7rem 1.5rem",
+      }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div
+        className="absolute inset-0"
+        style={{ backgroundColor: "#f3f7fb" }}
+      />
+      <div className="relative z-10 max-w-6xl mx-auto">
         {/* Title */}
         <motion.div
           className="text-center mb-16 sm:mb-20"

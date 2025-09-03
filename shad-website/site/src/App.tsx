@@ -136,7 +136,7 @@ function Navigation() {
           <button
             className={cn(
               navigationMenuTriggerStyle(),
-              "bg-blue-400 text-primary-foreground hover:bg-primary/90 text-lg font-medium"
+              "bg-blue-400 text-primary-foreground hover:bg-primary/90 text-lg font-medium px-5 py-5"
             )}
           >
             Register
