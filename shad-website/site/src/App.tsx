@@ -128,7 +128,7 @@ function Navigation() {
           <button
             className={cn(
               navigationMenuTriggerStyle(),
-              "bg-transparent hover:bg-accent text-lg font-medium"
+              "bg-transparent hover:bg-accent text-lg font-medium px-5 py-5" 
             )}
           >
             Log In

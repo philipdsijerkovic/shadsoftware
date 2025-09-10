@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import BackgroundLayout from "../BackgroundLayout";
+import { Button } from "../components/ui/button";
+import { submitQuoteRequest } from "../lib/api";
+import type { ApiResponse } from "../lib/api";
+import type { QuoteRequest } from "../lib/api";
 
 const Quote: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -12,6 +16,27 @@ const Quote: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
+  const [formData, setFormData] = useState<QuoteRequest>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    company: "",
+    projectName: "",
+    projectType: "", // Add this field
+    projectDescription: "",
+    budget: "",
+    timeline: "",
+    features: "",
+    inspiration: "",
+    additionalInfo: "",
+    requestCall: false,
+  });
+  const [submitResult, setSubmitResult] = useState<{
+    success: boolean;
+    message: string;
+    quoteId?: string;
+  } | null>(null);
 
   const totalSteps = 4;
 
@@ -76,6 +101,7 @@ const Quote: React.FC = () => {
     setSelected,
     placeholder,
     label,
+    fieldName, // Add this prop
   }: any) => (
     <div className="space-y-2 relative">
       <label className="block text-sm font-semibold text-gray-700">
@@ -121,6 +147,11 @@ const Quote: React.FC = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   setSelected(option.value);
+                  // Update formData when dropdown value changes
+                  setFormData((prev) => ({
+                    ...prev,
+                    [fieldName]: option.value,
+                  }));
                   setIsOpen(false);
                 }}
                 className="w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors first:rounded-t-2xl last:rounded-b-2xl text-gray-900"
@@ -156,10 +187,63 @@ const Quote: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted");
     setIsSubmitting(true);
+    setSubmitResult(null);
+
+    try {
+      const response: ApiResponse<any> = await submitQuoteRequest(formData);
+      setSubmitResult({
+        success: true,
+        message: response.message,
+        quoteId: response.quoteId,
+      });
+
+      // Reset form on success
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        company: "",
+        projectName: "",
+        projectType: "", // Add this
+        projectDescription: "",
+        budget: "",
+        timeline: "",
+        features: "",
+        inspiration: "",
+        additionalInfo: "",
+        requestCall: false,
+      });
+      setSelectedProjectType("");
+      setSelectedBudget("");
+      setSelectedTimeline("");
+      setCurrentStep(1);
+    } catch (error) {
+      setSubmitResult({
+        success: false,
+        message:
+          error instanceof Error
+            ? error.message
+            : "An error occurred while submitting your request.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Show loading screen
@@ -218,6 +302,60 @@ const Quote: React.FC = () => {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </BackgroundLayout>
+    );
+  }
+
+  // Show success screen
+  if (submitResult?.success) {
+    return (
+      <BackgroundLayout>
+        <div className="h-screen flex items-start justify-center pt-32">
+          <div className="bg-white rounded-3xl p-12 shadow-2xl shadow-black/10 text-center max-w-md w-full">
+            <div className="text-green-500 text-6xl mb-6">✅</div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Quote Submitted!
+            </h2>
+            <p className="text-gray-600 mb-6">{submitResult.message}</p>
+            {submitResult.quoteId && (
+              <p className="text-sm text-gray-500 mb-6">
+                Quote ID: {submitResult.quoteId}
+              </p>
+            )}
+            <Button
+              onClick={() => {
+                setSubmitResult(null);
+                setCurrentStep(1);
+              }}
+              className="bg-blue-400 hover:bg-blue-500"
+            >
+              Submit Another Quote
+            </Button>
+          </div>
+        </div>
+      </BackgroundLayout>
+    );
+  }
+
+  // Show error screen
+  if (submitResult && !submitResult.success) {
+    return (
+      <BackgroundLayout>
+        <div className="h-screen flex items-start justify-center pt-32">
+          <div className="bg-white rounded-3xl p-12 shadow-2xl shadow-black/10 text-center max-w-md w-full">
+            <div className="text-red-500 text-6xl mb-6">❌</div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Submission Failed
+            </h2>
+            <p className="text-gray-600 mb-6">{submitResult.message}</p>
+            <Button
+              onClick={() => setSubmitResult(null)}
+              className="bg-blue-400 hover:bg-blue-500"
+            >
+              Try Again
+            </Button>
           </div>
         </div>
       </BackgroundLayout>
@@ -291,6 +429,10 @@ const Quote: React.FC = () => {
                         <input
                           type="text"
                           id="firstName"
+                          name="firstName"
+                          required
+                          value={formData.firstName}
+                          onChange={handleInputChange}
                           className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                           placeholder="John"
                         />
@@ -305,6 +447,10 @@ const Quote: React.FC = () => {
                         <input
                           type="text"
                           id="lastName"
+                          name="lastName"
+                          required
+                          value={formData.lastName}
+                          onChange={handleInputChange}
                           className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                           placeholder="Doe"
                         />
@@ -322,6 +468,10 @@ const Quote: React.FC = () => {
                         <input
                           type="email"
                           id="email"
+                          name="email"
+                          required
+                          value={formData.email}
+                          onChange={handleInputChange}
                           className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                           placeholder="john@example.com"
                         />
@@ -336,6 +486,9 @@ const Quote: React.FC = () => {
                         <input
                           type="text"
                           id="company"
+                          name="company"
+                          value={formData.company}
+                          onChange={handleInputChange}
                           className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                           placeholder="Your Company"
                         />
@@ -352,6 +505,9 @@ const Quote: React.FC = () => {
                       <input
                         type="tel"
                         id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
                         className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                         placeholder="+1 (555) 123-4567"
                       />
@@ -378,6 +534,7 @@ const Quote: React.FC = () => {
                       setSelected={setSelectedProjectType}
                       placeholder="Select your project type"
                       label="Project Type"
+                      fieldName="projectType" // Now this matches
                     />
 
                     <div className="space-y-2">
@@ -390,6 +547,9 @@ const Quote: React.FC = () => {
                       <input
                         type="text"
                         id="projectName"
+                        name="projectName"
+                        value={formData.projectName}
+                        onChange={handleInputChange}
                         className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                         placeholder="Your Project Name"
                       />
@@ -404,7 +564,10 @@ const Quote: React.FC = () => {
                       </label>
                       <textarea
                         id="description"
+                        name="projectDescription"
                         rows={6}
+                        value={formData.projectDescription}
+                        onChange={handleInputChange}
                         className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400 resize-none"
                         placeholder="Describe your project in detail. What are your goals, target audience, key features, and any specific requirements?"
                       />
@@ -432,6 +595,7 @@ const Quote: React.FC = () => {
                         setSelected={setSelectedBudget}
                         placeholder="Select your budget range"
                         label="Budget Range"
+                        fieldName="budget" // Add this
                       />
 
                       <CustomDropdown
@@ -442,6 +606,7 @@ const Quote: React.FC = () => {
                         setSelected={setSelectedTimeline}
                         placeholder="Select your timeline"
                         label="Project Timeline"
+                        fieldName="timeline" // Add this
                       />
                     </div>
 
@@ -454,7 +619,10 @@ const Quote: React.FC = () => {
                       </label>
                       <textarea
                         id="features"
+                        name="features"
                         rows={5}
+                        value={formData.features}
+                        onChange={handleInputChange}
                         className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400 resize-none"
                         placeholder="List the key features and requirements for your project..."
                       />
@@ -469,7 +637,10 @@ const Quote: React.FC = () => {
                       </label>
                       <textarea
                         id="inspiration"
+                        name="inspiration"
                         rows={3}
+                        value={formData.inspiration}
+                        onChange={handleInputChange}
                         className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400 resize-none"
                         placeholder="Share any websites, apps, or designs that inspire you..."
                       />
@@ -497,7 +668,10 @@ const Quote: React.FC = () => {
                       </label>
                       <textarea
                         id="additionalInfo"
+                        name="additionalInfo"
                         rows={4}
+                        value={formData.additionalInfo}
+                        onChange={handleInputChange}
                         className="w-full px-4 py-4 bg-gray-50/80 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 placeholder-gray-400 resize-none"
                         placeholder="Anything else you'd like us to know about your project or specific requirements..."
                       />
@@ -548,6 +722,14 @@ const Quote: React.FC = () => {
                         <label className="flex items-center space-x-3 cursor-pointer">
                           <input
                             type="checkbox"
+                            name="requestCall"
+                            checked={formData.requestCall}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                requestCall: e.target.checked,
+                              }))
+                            }
                             className="w-4 h-4 text-blue-400 border-gray-300 rounded focus:ring-blue-400 flex-shrink-0"
                           />
                           <span className="text-sm text-gray-700">
@@ -584,12 +766,13 @@ const Quote: React.FC = () => {
                     Next Step
                   </button>
                 ) : (
-                  <button
+                  <Button
                     type="submit"
-                    className="px-8 py-3 bg-blue-400 text-white rounded-2xl font-semibold hover:bg-blue-500 focus:ring-4 focus:ring-blue-400/25 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                    disabled={isSubmitting}
+                    className="px-8 py-3 bg-blue-400 text-white rounded-2xl font-semibold hover:bg-blue-500 focus:ring-4 focus:ring-blue-400/25 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] w-full"
                   >
-                    Get My Quote
-                  </button>
+                    {isSubmitting ? "Submitting..." : "Submit Quote Request"}
+                  </Button>
                 )}
               </div>
             </form>
